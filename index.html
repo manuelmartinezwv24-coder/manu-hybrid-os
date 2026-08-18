@@ -1,0 +1,414 @@
+<!doctype html>
+<html lang="es">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Manu Hybrid OS</title>
+<meta name="theme-color" content="#111318" />
+<meta name="mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-capable" content="yes" />
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent" />
+<meta name="apple-mobile-web-app-title" content="Hybrid OS" />
+<link rel="manifest" href="./manifest.webmanifest" />
+<link rel="apple-touch-icon" href="./icons/apple-touch-icon.png" />
+<link rel="icon" type="image/png" sizes="192x192" href="./icons/icon-192.png" />
+<link rel="icon" type="image/png" sizes="512x512" href="./icons/icon-512.png" />
+
+<style>
+:root{
+  --ink:#171717;
+  --muted:#60646c;
+  --paper:#f7f1e8;
+  --paper2:#fffaf2;
+  --card:#ffffffcc;
+  --line:#25252518;
+  --shadow:0 22px 70px rgba(25,22,18,.14);
+  --run:#0fb97a;
+  --run2:#dff8ed;
+  --gym:#315dff;
+  --gym2:#e8edff;
+  --pre:#8b3dff;
+  --pre2:#f0e8ff;
+  --warn:#e98912;
+  --warn2:#fff0d9;
+  --bad:#e94343;
+  --bad2:#ffe7e7;
+  --dark:#111318;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  color:var(--ink);
+  background:
+    radial-gradient(circle at 8% 8%, rgba(49,93,255,.13), transparent 30%),
+    radial-gradient(circle at 94% 3%, rgba(15,185,122,.15), transparent 28%),
+    linear-gradient(135deg,#f6efe3 0%,#fffaf2 50%,#edf4ff 100%);
+  font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  line-height:1.55;
+}
+body::before{
+  content:"";
+  position:fixed; inset:0;
+  pointer-events:none;
+  background-image:linear-gradient(rgba(17,19,24,.035) 1px, transparent 1px), linear-gradient(90deg, rgba(17,19,24,.035) 1px, transparent 1px);
+  background-size:38px 38px;
+  mask-image:linear-gradient(to bottom, black, transparent 82%);
+}
+nav{
+  position:sticky; top:0; z-index:50;
+  display:flex; align-items:center; gap:.7rem; overflow:auto;
+  padding:.75rem 1rem;
+  background:rgba(255,250,242,.78);
+  backdrop-filter:blur(18px);
+  border-bottom:1px solid var(--line);
+}
+.logo{font-weight:950; letter-spacing:-.04em; white-space:nowrap; margin-right:auto; display:flex; align-items:center; gap:.55rem}
+.logo .dot{width:13px;height:13px;border-radius:999px;background:linear-gradient(135deg,var(--gym),var(--run));box-shadow:0 0 0 7px rgba(49,93,255,.09)}
+nav a{font-size:.76rem;text-transform:uppercase;letter-spacing:.08em;text-decoration:none;color:var(--muted);font-weight:800;white-space:nowrap;padding:.45rem .6rem;border-radius:999px}
+nav a:hover{background:#fff;color:var(--ink)}
+.hero{max-width:1180px;margin:0 auto;padding:4.8rem 1rem 2.2rem;display:grid;grid-template-columns:1.1fr .9fr;gap:1.1rem;align-items:stretch}
+.hero-main,.hero-side,.card{background:var(--card);border:1px solid var(--line);border-radius:32px;box-shadow:var(--shadow);position:relative;overflow:hidden}
+.hero-main{padding:clamp(1.3rem,4vw,3rem);min-height:480px;display:flex;flex-direction:column;justify-content:space-between;background:linear-gradient(160deg,rgba(255,255,255,.82),rgba(255,255,255,.55))}
+.kicker{display:inline-flex;align-items:center;gap:.45rem;width:max-content;border:1px solid rgba(15,185,122,.23);background:var(--run2);color:#08764d;border-radius:999px;padding:.35rem .75rem;font-size:.72rem;font-weight:900;letter-spacing:.09em;text-transform:uppercase}
+h1{font-size:clamp(3rem,8vw,6.8rem);line-height:.86;letter-spacing:-.075em;margin:1rem 0 1.2rem;font-weight:1000}
+.gradient{background:linear-gradient(120deg,var(--gym),var(--run));-webkit-background-clip:text;background-clip:text;color:transparent}
+.sub{font-size:1.03rem;color:var(--muted);max-width:650px}
+.hero-actions{display:flex;gap:.65rem;flex-wrap:wrap;margin-top:1.5rem}
+.btn{border:1px solid var(--line);border-radius:999px;background:#fff;padding:.72rem 1rem;font-weight:900;text-decoration:none;color:var(--ink);display:inline-flex;gap:.45rem;align-items:center;box-shadow:0 8px 24px rgba(0,0,0,.05)}
+.btn.dark{background:var(--dark);color:white}.btn.run{background:var(--run2);color:#08764d}.btn.gym{background:var(--gym2);color:#193bd0}
+.hero-side{padding:1rem;background:rgba(17,19,24,.96);color:white;display:flex;flex-direction:column;gap:.8rem}
+.identity{padding:1.25rem;border:1px solid rgba(255,255,255,.1);border-radius:24px;background:radial-gradient(circle at 10% 10%,rgba(49,93,255,.3),transparent 30%),radial-gradient(circle at 90% 15%,rgba(15,185,122,.22),transparent 30%),rgba(255,255,255,.045)}
+.identity small{color:#aeb5c3;font-weight:800;text-transform:uppercase;letter-spacing:.12em}.identity h2{font-size:2rem;margin:.35rem 0 0;letter-spacing:-.04em}.identity p{color:#c8ced8;margin:.6rem 0 0}
+.stack{display:grid;grid-template-columns:1fr 1fr;gap:.75rem}
+.stat{border:1px solid rgba(255,255,255,.1);border-radius:20px;padding:1rem;background:rgba(255,255,255,.045)}
+.stat b{display:block;font-size:1.55rem}.stat span{font-size:.72rem;color:#aeb5c3;text-transform:uppercase;letter-spacing:.1em;font-weight:900}
+.mini-warning{border-radius:20px;padding:1rem;background:rgba(233,137,18,.12);border:1px solid rgba(233,137,18,.25);color:#ffd89b;font-weight:700}
+section{max-width:1180px;margin:0 auto;padding:1rem}.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:1rem}.card{padding:1.25rem;background:rgba(255,255,255,.73)}
+.span12{grid-column:span 12}.span8{grid-column:span 8}.span7{grid-column:span 7}.span6{grid-column:span 6}.span5{grid-column:span 5}.span4{grid-column:span 4}.span3{grid-column:span 3}
+h2{font-size:clamp(1.55rem,3vw,2.45rem);line-height:1;letter-spacing:-.05em;margin:.25rem 0 1rem}h3{margin:.1rem 0 .5rem;font-size:1.12rem}.muted{color:var(--muted)}
+.pill{display:inline-flex;align-items:center;gap:.35rem;border:1px solid var(--line);border-radius:999px;padding:.32rem .68rem;font-size:.8rem;font-weight:900;color:var(--muted);background:#fff;margin:.12rem}.pill.gym{background:var(--gym2);color:#193bd0;border-color:rgba(49,93,255,.16)}.pill.run{background:var(--run2);color:#08764d;border-color:rgba(15,185,122,.18)}.pill.pre{background:var(--pre2);color:#5f24c4;border-color:rgba(139,61,255,.18)}.pill.warn{background:var(--warn2);color:#9c5a04;border-color:rgba(233,137,18,.18)}
+.week-flow{display:grid;grid-template-columns:repeat(7,1fr);gap:.6rem;margin-top:1rem}.day{border:1px solid var(--line);background:#fff;border-radius:24px;padding:.9rem;min-height:145px;display:flex;flex-direction:column;justify-content:space-between;cursor:pointer;transition:transform .18s ease, box-shadow .18s ease}.day:hover{transform:translateY(-3px);box-shadow:0 14px 35px rgba(0,0,0,.08)}.day strong{font-size:1.1rem}.day small{color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.08em}.stripe{height:8px;border-radius:999px;background:var(--line);margin-top:.5rem}.day.gym .stripe{background:linear-gradient(90deg,var(--gym),#91a7ff)}.day.run .stripe{background:linear-gradient(90deg,var(--run),#95ffd3)}.day.rest .stripe{background:linear-gradient(90deg,#ddd,#aaa)}
+.flex-engine{display:grid;grid-template-columns:repeat(3,1fr);gap:.75rem}.mode{border:1px solid var(--line);background:#fff;border-radius:26px;padding:1rem}.mode .tag{display:inline-flex;border-radius:999px;padding:.23rem .55rem;font-size:.7rem;font-weight:950;letter-spacing:.08em;text-transform:uppercase}.tag.blue{background:var(--gym2);color:#193bd0}.tag.green{background:var(--run2);color:#08764d}.tag.orange{background:var(--warn2);color:#9c5a04}
+.selector{display:flex;gap:.5rem;flex-wrap:wrap;margin:1rem 0}.tab{border:1px solid var(--line);background:#fff;color:var(--muted);font-weight:950;border-radius:999px;padding:.65rem .9rem;cursor:pointer}.tab.active{background:var(--dark);color:white;border-color:var(--dark)}.panel{display:none}.panel.active{display:block}.session{display:grid;grid-template-columns:280px 1fr;gap:1rem;align-items:start}.session-card{border-radius:26px;padding:1rem;color:white;background:var(--dark);min-height:260px;display:flex;flex-direction:column;justify-content:space-between}.session-card.gym{background:linear-gradient(145deg,#17224d,#315dff)}.session-card.run{background:linear-gradient(145deg,#073b2a,#0fb97a)}.session-card.pre{background:linear-gradient(145deg,#2b164e,#8b3dff)}.session-card.rest{background:linear-gradient(145deg,#343434,#111)}.session-card .big{font-size:3rem;font-weight:1000;letter-spacing:-.07em;line-height:.9}.session-card p{color:rgba(255,255,255,.78)}
+.table{width:100%;border-collapse:separate;border-spacing:0 .55rem}.table th{font-size:.72rem;color:var(--muted);letter-spacing:.09em;text-transform:uppercase;text-align:left;padding:0 .8rem}.table td{background:#fff;padding:.8rem;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}.table td:first-child{border-left:1px solid var(--line);border-radius:16px 0 0 16px;font-weight:900}.table td:last-child{border-right:1px solid var(--line);border-radius:0 16px 16px 0;color:var(--muted)}
+.note{border:1px solid var(--line);border-radius:22px;padding:1rem;background:#fff;margin:.8rem 0}.note.run{background:var(--run2);border-color:rgba(15,185,122,.22)}.note.gym{background:var(--gym2);border-color:rgba(49,93,255,.22)}.note.warn{background:var(--warn2);border-color:rgba(233,137,18,.22)}.note.bad{background:var(--bad2);border-color:rgba(233,67,67,.2)}
+.progress{display:grid;grid-template-columns:repeat(4,1fr);gap:.75rem}.wk{background:#fff;border:1px solid var(--line);border-radius:24px;padding:1rem;position:relative;overflow:hidden}.wk::before{content:"";position:absolute;top:0;left:0;right:0;height:8px;background:linear-gradient(90deg,var(--run),var(--gym))}.wk strong{display:block;font-size:1.25rem;margin-top:.45rem}.rules{display:grid;gap:.75rem}.rule{background:#fff;border:1px solid var(--line);border-radius:24px;padding:1rem;display:grid;grid-template-columns:70px 1fr;gap:.8rem;align-items:center}.light{width:58px;height:58px;border-radius:20px;display:grid;place-items:center;font-weight:1000}.light.green{background:var(--run2);color:#08764d}.light.yellow{background:var(--warn2);color:#9c5a04}.light.red{background:var(--bad2);color:#b91616}
+.copybox{background:#111318;color:#f7f1e8;border-radius:26px;padding:1rem;overflow:auto;border:1px solid rgba(255,255,255,.12)}pre{white-space:pre-wrap;margin:0;font-family:ui-monospace,SFMono-Regular,Menlo,monospace;font-size:.88rem}.footer{padding:3rem 1rem 4rem;text-align:center;color:var(--muted)}
+@media(max-width:920px){.hero{grid-template-columns:1fr;padding-top:2rem}.span8,.span7,.span6,.span5,.span4,.span3{grid-column:span 12}.week-flow{grid-template-columns:1fr 1fr}.flex-engine,.progress{grid-template-columns:1fr}.session{grid-template-columns:1fr}.stack{grid-template-columns:1fr}.day{min-height:120px}}
+@media(max-width:520px){nav a{display:none}.week-flow{grid-template-columns:1fr}.hero-main{min-height:auto}.rule{grid-template-columns:1fr}.light{width:48px;height:48px}.table{font-size:.88rem}.table th:nth-child(4),.table td:nth-child(4){display:none}}
+</style>
+</head>
+<body>
+<nav>
+  <div class="logo"><span class="dot"></span> Manu Hybrid OS</div>
+  <a href="#sistema">Sistema</a>
+  <a href="#semana">Semana</a>
+  <a href="#dias">Días</a>
+  <a href="#progresion">Progresión</a>
+  <a href="#reglas">Reglas</a>
+  <a href="#bitacora">Bitácora</a>
+</nav>
+
+<header class="hero">
+  <div class="hero-main">
+    <div>
+      <span class="kicker">V2 · enfoque flexible · agosto 2026</span>
+      <h1>Físico <span class="gradient">magro</span><br>motor paciente.</h1>
+      <p class="sub">Este no es un calendario militar. Es un sistema híbrido: hipertrofia como prioridad, running progresivo como segunda capa, y la tibia derecha como sensor principal. Si duermes más, trabajas tarde o solo tienes media hora, el plan cambia de forma sin romperse.</p>
+      <div class="hero-actions">
+        <a class="btn dark" href="#dias">Ver entrenos</a>
+        <a class="btn run" href="#progresion">Ver running</a>
+        <a class="btn gym" href="#sistema">Ver flexibilidad</a>
+      </div>
+    </div>
+    <div>
+      <span class="pill gym">4 gym</span><span class="pill run">2 running</span><span class="pill pre">prehab tibial</span><span class="pill warn">no rígido</span>
+    </div>
+  </div>
+
+  <aside class="hero-side">
+    <div class="identity">
+      <small>Perfil actual</small>
+      <h2>Manu · atleta híbrido en construcción</h2>
+      <p>21 años 9 meses · 1.75 m · 163 lb. Objetivo: subir a 170–175 lb magro, seguir ganando músculo y correr cada vez mejor sin recaer en periostitis.</p>
+    </div>
+    <div class="stack">
+      <div class="stat"><b>30:00</b><span>5K fuerte</span></div>
+      <div class="stat"><b>32:35</b><span>5K cómodo/Z3</span></div>
+      <div class="stat"><b>235×7</b><span>Peso muerto reciente</span></div>
+      <div class="stat"><b>450×8</b><span>Prensa</span></div>
+    </div>
+    <div class="mini-warning">Regla reina: si la tibia derecha pasa de 2/10 o amanece peor, no se progresa. Punto. La tibia tiene poder de veto.</div>
+  </aside>
+</header>
+
+<main>
+<section id="sistema" class="grid">
+  <div class="card span7">
+    <h2>El sistema: entrenar por prioridad, no por culpa</h2>
+    <p class="muted">Como tus mañanas no siempre van a existir —porque sueño, trabajo, vida, y el villano de todos: “solo cinco minutos más”— el plan usa tres versiones por día. La sesión ideal es el plan completo. La mínima mantiene la continuidad. La nocturna evita que llegues sobreexcitado a dormir.</p>
+    <div class="note gym"><b>Principio clave:</b> no buscamos perfección semanal; buscamos consistencia acumulada sin picos absurdos de carga.</div>
+  </div>
+  <div class="card span5">
+    <h2>Jerarquía semanal</h2>
+    <p><span class="pill run">1. Sábado long run</span></p>
+    <p><span class="pill pre">2. Prehab tibial</span></p>
+    <p><span class="pill gym">3. Lower A + Lower B</span></p>
+    <p><span class="pill gym">4. Upper A + Upper B</span></p>
+    <p class="muted">Si una semana se complica, se protege primero la tibia, luego el long run, luego la frecuencia de pierna, y después se rescatan upper con sesiones mínimas.</p>
+  </div>
+
+  <div class="card span12">
+    <h2>Modos de entrenamiento</h2>
+    <div class="flex-engine">
+      <div class="mode"><span class="tag blue">Ideal</span><h3>55–75 min</h3><p>Sesión completa. Úsala si tienes mañana libre real o una noche tranquila. Aquí va el estímulo principal.</p></div>
+      <div class="mode"><span class="tag green">Mínima efectiva</span><h3>25–40 min</h3><p>La versión “no se rompió la semana”. Un básico pesado/moderado, un accesorio clave y prehab. Cero drama.</p></div>
+      <div class="mode"><span class="tag orange">Noche</span><h3>45–65 min</h3><p>Menos fallo, menos cafeína, menos ego. Se entrena fuerte pero sin salir del gym como si te persiguiera un toro.</p></div>
+    </div>
+  </div>
+</section>
+
+<section id="semana" class="grid">
+  <div class="card span12">
+    <h2>Semana base — adaptable</h2>
+    <p class="muted">Esta distribución respeta tu logística: entre semana sesiones que caben mejor; sábado queda para correr largo porque ahí no trabajas.</p>
+    <div class="week-flow">
+      <div class="day gym" onclick="openTab('lun',this)"><small>Lunes</small><strong>Lower A</strong><span>Cuádriceps + prehab</span><div class="stripe"></div></div>
+      <div class="day gym" onclick="openTab('mar',this)"><small>Martes</small><strong>Upper A</strong><span>Pecho/espalda base</span><div class="stripe"></div></div>
+      <div class="day run" onclick="openTab('mie',this)"><small>Miércoles</small><strong>Run corto</strong><span>Z2 real</span><div class="stripe"></div></div>
+      <div class="day gym" onclick="openTab('jue',this)"><small>Jueves</small><strong>Lower B</strong><span>Posterior liviano</span><div class="stripe"></div></div>
+      <div class="day gym" onclick="openTab('vie',this)"><small>Viernes</small><strong>Upper B</strong><span>Hipertrofia sin fatigar pierna</span><div class="stripe"></div></div>
+      <div class="day run" onclick="openTab('sab',this)"><small>Sábado</small><strong>Long run</strong><span>Progresivo, suave</span><div class="stripe"></div></div>
+      <div class="day rest" onclick="openTab('dom',this)"><small>Domingo</small><strong>Reset</strong><span>Descanso / movilidad</span><div class="stripe"></div></div>
+    </div>
+    <div class="note warn"><b>Si duermes hasta las 7:</b> no “pagas” con culpa. Ese día pasa a modo noche o mínima efectiva. Si tampoco hay noche, se mueve la sesión según las reglas de rescate.</div>
+  </div>
+</section>
+
+<section id="dias" class="grid">
+  <div class="card span12">
+    <h2>Entrenos por día</h2>
+    <div class="selector">
+      <button class="tab active" onclick="openTab('lun',this)">Lun Lower A</button>
+      <button class="tab" onclick="openTab('mar',this)">Mar Upper A</button>
+      <button class="tab" onclick="openTab('mie',this)">Mié Run</button>
+      <button class="tab" onclick="openTab('jue',this)">Jue Lower B</button>
+      <button class="tab" onclick="openTab('vie',this)">Vie Upper B</button>
+      <button class="tab" onclick="openTab('sab',this)">Sáb Long</button>
+      <button class="tab" onclick="openTab('dom',this)">Dom Reset</button>
+    </div>
+
+    <div id="lun" class="panel active">
+      <div class="session">
+        <div class="session-card gym"><div><span class="pill gym">Lower A</span><div class="big">Pierna<br>base</div><p>Cuádriceps dominante, hipertrofia seria, sin destruirte para la semana.</p></div><small>RIR 1–3 · sin fallo total</small></div>
+        <div>
+          <table class="table"><thead><tr><th>Bloque</th><th>Trabajo</th><th>Dosis</th><th>Notas</th></tr></thead><tbody>
+            <tr><td>Prehab</td><td>Tibial anterior + sóleo + arco del pie</td><td>8–12 min</td><td>Antes de cargar. Esto es seguro de vida.</td></tr>
+            <tr><td>Principal</td><td>Smith squat o prensa</td><td>3–4 × 6–10</td><td>RIR 2. Técnica limpia, nada de ego raro.</td></tr>
+            <tr><td>Bisagra</td><td>RDL / peso muerto rumano moderado</td><td>2–3 × 8–10</td><td>Más control que récord.</td></tr>
+            <tr><td>Accesorio</td><td>Extensión de cuádriceps</td><td>2–3 × 10–15</td><td>Pump sin dolor de rodilla.</td></tr>
+            <tr><td>Posterior</td><td>Curl femoral sentado</td><td>2–3 × 10–15</td><td>Completa femoral sin fatigar lumbar.</td></tr>
+            <tr><td>Pantorrilla</td><td>Gemelo + sóleo</td><td>3 × 8–15</td><td>Pausa abajo, control total.</td></tr>
+          </tbody></table>
+          <div class="note"><b>Versión mínima:</b> prehab + prensa/Smith 3 series + curl femoral 2 series + sóleo 2 series.</div>
+          <div class="note warn"><b>Aductor izquierdo:</b> por ahora reentrada conservadora. Si haces máquina de aductor, rango cómodo, 2 × 15, sin dolor ni estirón.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mar" class="panel">
+      <div class="session">
+        <div class="session-card gym"><div><span class="pill gym">Upper A</span><div class="big">Torso<br>fuerte</div><p>Día más “constructor”: pecho inclinado, espalda y brazos sin interferir con running.</p></div><small>Hipertrofia · frecuencia 2</small></div>
+        <div>
+          <table class="table"><thead><tr><th>Bloque</th><th>Trabajo</th><th>Dosis</th><th>Notas</th></tr></thead><tbody>
+            <tr><td>Press</td><td>Press inclinado con mancuernas</td><td>3–4 × 6–10</td><td>Referencia: 55 lb por lado × 10–12.</td></tr>
+            <tr><td>Jalón</td><td>Jalón al pecho agarre triángulo</td><td>3–4 × 8–12</td><td>Referencia: 14 placas × 7–8.</td></tr>
+            <tr><td>Remo</td><td>Remo máquina/cable</td><td>3 × 8–12</td><td>Control escapular.</td></tr>
+            <tr><td>Hombro</td><td>Elevación lateral</td><td>3 × 12–20</td><td>Deltoide lateral, sin trampa fea.</td></tr>
+            <tr><td>Bíceps</td><td>Curl mancuerna</td><td>2–3 × 10–15</td><td>Referencia: 25 lb × 12.</td></tr>
+            <tr><td>Tríceps</td><td>Cuerda / extensión</td><td>2–3 × 10–15</td><td>Sin molestar codo.</td></tr>
+          </tbody></table>
+          <div class="note"><b>Versión mínima:</b> press inclinado + jalón + laterales + brazos rápidos. 30–40 min y saliste vivo.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="mie" class="panel">
+      <div class="session">
+        <div class="session-card run"><div><span class="pill run">Run Z2</span><div class="big">Motor<br>suave</div><p>El día que más cuesta respetar porque se siente “muy fácil”. Justo por eso funciona.</p></div><small>Conversacional · sin perseguir pace</small></div>
+        <div>
+          <table class="table"><thead><tr><th>Parte</th><th>Trabajo</th><th>Dosis</th><th>Notas</th></tr></thead><tbody>
+            <tr><td>Inicio</td><td>Caminata + movilidad tobillo/cadera</td><td>5–8 min</td><td>Calentar antes de trotar.</td></tr>
+            <tr><td>Run</td><td>Zona 2 real</td><td>25–35 min</td><td>Respiras cómodo. Si hablar cuesta, vas rápido.</td></tr>
+            <tr><td>Cierre</td><td>Caminata</td><td>3–5 min</td><td>Que la tibia cierre tranquila.</td></tr>
+            <tr><td>Post</td><td>Tibial/sóleo ligero</td><td>5 min</td><td>Opcional si hay tiempo.</td></tr>
+          </tbody></table>
+          <div class="note run"><b>Versión mínima:</b> 20–25 min suave. Cuenta. No todos los días tienen que tener épica cinematográfica.</div>
+          <div class="note bad"><b>Prohibido por ahora:</b> intervalos fuertes, cuestas, competir con alguien, o convertir Z2 en “zona 2 pero con orgullo herido”.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="jue" class="panel">
+      <div class="session">
+        <div class="session-card pre"><div><span class="pill pre">Lower B</span><div class="big">Pierna<br>fina</div><p>Posterior, glúteo, pantorrilla y control. Debe sumar, no dejarte tieso para el sábado.</p></div><small>48h antes del long run</small></div>
+        <div>
+          <table class="table"><thead><tr><th>Bloque</th><th>Trabajo</th><th>Dosis</th><th>Notas</th></tr></thead><tbody>
+            <tr><td>Prehab</td><td>Tibial anterior + sóleo + pie</td><td>8–10 min</td><td>Sin pogos si la tibia está sensible.</td></tr>
+            <tr><td>Bisagra</td><td>RDL / peso muerto técnico</td><td>3 × 6–10</td><td>Moderado. No buscar PR.</td></tr>
+            <tr><td>Glúteo</td><td>Hip thrust / puente máquina</td><td>3 × 8–12</td><td>Fuerte pero controlado.</td></tr>
+            <tr><td>Femoral</td><td>Curl sentado</td><td>3 × 10–15</td><td>Buena opción para hipertrofia sin impacto.</td></tr>
+            <tr><td>Abducción</td><td>Máquina que abre</td><td>2–3 × 12–20</td><td>Útil por cadera/aductor, sin dolor.</td></tr>
+            <tr><td>Pantorrilla</td><td>Sóleo énfasis rodilla flexionada</td><td>3 × 10–15</td><td>Clave para tolerar running.</td></tr>
+          </tbody></table>
+          <div class="note warn"><b>Regla del jueves:</b> terminas sintiendo que podrías hacer más. Si sales destruido, el sábado te manda factura.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="vie" class="panel">
+      <div class="session">
+        <div class="session-card gym"><div><span class="pill gym">Upper B</span><div class="big">Torso<br>pump</div><p>Hipertrofia de torso con cero costo para las piernas antes del long run.</p></div><small>Ideal viernes noche</small></div>
+        <div>
+          <table class="table"><thead><tr><th>Bloque</th><th>Trabajo</th><th>Dosis</th><th>Notas</th></tr></thead><tbody>
+            <tr><td>Press</td><td>Press máquina/plano o inclinado liviano</td><td>3 × 8–12</td><td>Variación distinta a martes.</td></tr>
+            <tr><td>Espalda</td><td>Remo pecho apoyado</td><td>3–4 × 8–12</td><td>Ahorrar lumbar para sábado.</td></tr>
+            <tr><td>Vertical</td><td>Jalón abierto/neutro</td><td>3 × 10–12</td><td>Rango completo.</td></tr>
+            <tr><td>Hombro</td><td>Lateral + posterior</td><td>3 × 12–20</td><td>Superset si vas corto de tiempo.</td></tr>
+            <tr><td>Brazos</td><td>Bíceps + tríceps</td><td>2–4 × 10–15</td><td>El viernes sí se vale pump sabroso.</td></tr>
+          </tbody></table>
+          <div class="note"><b>Versión mínima:</b> remo + press + laterales + un superset de brazos. Mantiene frecuencia y estética.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="sab" class="panel">
+      <div class="session">
+        <div class="session-card run"><div><span class="pill run">Long run</span><div class="big">Base<br>aeróbica</div><p>El sábado es el ancla del corredor. Suave, progresivo y con margen.</p></div><small>Long run ≠ carrera</small></div>
+        <div>
+          <table class="table"><thead><tr><th>Parte</th><th>Trabajo</th><th>Dosis</th><th>Notas</th></tr></thead><tbody>
+            <tr><td>Entrada</td><td>Caminata + trote muy suave</td><td>8–10 min</td><td>Primera mitad demasiado fácil.</td></tr>
+            <tr><td>Run</td><td>Z2 / cómodo</td><td>Según semana</td><td>Sin competir, sin cuestas duras.</td></tr>
+            <tr><td>Final</td><td>Últimos 5–10 min igual o un poco mejor</td><td>Solo si tibia 0/10</td><td>Progresivo, no heroico.</td></tr>
+            <tr><td>Post</td><td>Caminar + movilidad suave</td><td>5–8 min</td><td>Revisar tibia 2–24h después.</td></tr>
+          </tbody></table>
+          <div class="note run"><b>Si corres acompañado:</b> se declara antes: “hoy voy suave”. Si el ritmo del otro manda, eso ya no es sesión clave; es salida social.</div>
+        </div>
+      </div>
+    </div>
+
+    <div id="dom" class="panel">
+      <div class="session">
+        <div class="session-card rest"><div><span class="pill">Reset</span><div class="big">No<br>hacer</div><p>El descanso también entrena, sobre todo cuando quieres crecer músculo y correr más.</p></div><small>Domingo = absorber</small></div>
+        <div>
+          <table class="table"><thead><tr><th>Opción</th><th>Trabajo</th><th>Dosis</th><th>Notas</th></tr></thead><tbody>
+            <tr><td>Ideal</td><td>Descanso real</td><td>Todo el día</td><td>Comer, dormir, caminar tranquilo.</td></tr>
+            <tr><td>Movilidad</td><td>Cadera, tobillo, gemelo suave</td><td>10–15 min</td><td>Solo si se siente bien.</td></tr>
+            <tr><td>Chequeo</td><td>Tibia derecha + aductor izquierdo</td><td>2 min</td><td>Registrar 0–10.</td></tr>
+          </tbody></table>
+          <div class="note">Domingo no es para compensar todo. Si la semana se rompió, se reorganiza; no se castiga al cuerpo.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section id="progresion" class="grid">
+  <div class="card span12">
+    <h2>Running — progresión ondulante de 4 semanas</h2>
+    <p class="muted">No lineal: sube, consolida, descarga. El objetivo no es demostrar forma en agosto; es construir tejido que aguante meses.</p>
+    <div class="progress">
+      <div class="wk"><strong>Semana 1</strong><p><b>Mié:</b> 25–30 min Z2<br><b>Sáb:</b> 5–6 km suave</p><p class="muted">Meta: cero dolor.</p></div>
+      <div class="wk"><strong>Semana 2</strong><p><b>Mié:</b> 30–35 min Z2<br><b>Sáb:</b> 6–7 km suave</p><p class="muted">Si hay sensibilidad, repetir semana 1.</p></div>
+      <div class="wk"><strong>Semana 3</strong><p><b>Mié:</b> 30–35 min Z2<br><b>Sáb:</b> 7–8 km suave</p><p class="muted">Solo progresar con tibia limpia 24h.</p></div>
+      <div class="wk"><strong>Semana 4</strong><p><b>Mié:</b> 25–30 min Z2<br><b>Sáb:</b> 5–6 km suave</p><p class="muted">Descarga. No se salta.</p></div>
+    </div>
+    <div class="note run"><b>Después de 4 semanas limpias:</b> el miércoles puede recibir técnica, strides suaves o un tempo muy controlado. Antes de eso, el plan se queda aburrido a propósito.</div>
+  </div>
+
+  <div class="card span6">
+    <h2>Prehab tibial</h2>
+    <table class="table"><tbody>
+      <tr><td>Tibial anterior</td><td>2–3 × 12–20</td><td>Controlado</td><td>Subir punta del pie.</td></tr>
+      <tr><td>Sóleo</td><td>3 × 10–15</td><td>Rodilla flexionada</td><td>Pausa abajo.</td></tr>
+      <tr><td>Gemelo</td><td>2–3 × 8–12</td><td>Rodilla extendida</td><td>Lento.</td></tr>
+      <tr><td>Arco del pie</td><td>2 × 30–45s</td><td>Short foot/toalla</td><td>Sin calambre.</td></tr>
+      <tr><td>Pogos</td><td>2 × 10–15</td><td>Opcional</td><td>Solo tibia 0/10.</td></tr>
+    </tbody></table>
+  </div>
+  <div class="card span6">
+    <h2>Fuerza — progresión</h2>
+    <p><span class="pill gym">Sem 1: RIR 2–3</span></p>
+    <p><span class="pill gym">Sem 2: +1 serie en 1–2 ejercicios</span></p>
+    <p><span class="pill gym">Sem 3: RIR 1–2 en principales</span></p>
+    <p><span class="pill warn">Sem 4: descarga 70–80% volumen</span></p>
+    <div class="note warn"><b>Lower B nunca se vuelve batalla campal:</b> es el día que protege el long run.</div>
+  </div>
+</section>
+
+<section id="reglas" class="grid">
+  <div class="card span7">
+    <h2>Semáforo de la tibia</h2>
+    <div class="rules">
+      <div class="rule"><div class="light green">0–2</div><div><b>Verde</b><br><span class="muted">Puedes entrenar normal. Si al día siguiente sigue limpio, puedes progresar la semana siguiente.</span></div></div>
+      <div class="rule"><div class="light yellow">3</div><div><b>Amarillo</b><br><span class="muted">No subes volumen. Recortas running 30–50%, quitas pogos y dejas pierna sin fallo.</span></div></div>
+      <div class="rule"><div class="light red">4+</div><div><b>Rojo</b><br><span class="muted">Se suspende running. Caminata/bici suave si no duele. Si dura 48h o cambia pisada, evaluación profesional.</span></div></div>
+    </div>
+  </div>
+  <div class="card span5">
+    <h2>Reglas de rescate</h2>
+    <p><b>Si pierdes lunes:</b> martes Lower A, miércoles Upper A mínima o run suave según tibia.</p>
+    <p><b>Si pierdes miércoles run:</b> jueves 20–25 min suave o se omite; no se mete duro viernes.</p>
+    <p><b>Si pierdes jueves Lower B:</b> viernes Upper B normal; sábado long run manda. Lower B pasa a mínima el domingo solo si no afecta recuperación.</p>
+    <p><b>Si noche está pesada:</b> no hagas pierna al fallo ni entrenos que te arruinen sueño.</p>
+  </div>
+
+  <div class="card span12">
+    <h2>Decisión diaria en 20 segundos</h2>
+    <p><span class="pill pre">Tibia 0–2</span> + <span class="pill warn">sueño decente</span> + <span class="pill gym">tiempo real</span> = sesión ideal.</p>
+    <p><span class="pill pre">Tibia 0–2</span> + <span class="pill warn">poco tiempo</span> = mínima efectiva.</p>
+    <p><span class="pill warn">mal sueño</span> + <span class="pill gym">gym noche</span> = volumen moderado, sin fallo, salida limpia.</p>
+    <p><span class="pill pre">tibia 3+</span> = no se negocia: recorte o sustitución.</p>
+  </div>
+</section>
+
+<section id="bitacora" class="grid">
+  <div class="card span12">
+    <h2>Bitácora para pegar después de entrenar</h2>
+    <div class="copybox"><pre>Día / fecha:
+Ventana usada: mañana / noche / mínima
+Entreno realizado:
+Duración total:
+Cargas principales o distancia:
+RPE general 1–10:
+Tibia derecha durante: 0–10
+Tibia derecha al terminar: 0–10
+Aductor izquierdo: 0–10
+Sueño: horas + calidad
+Energía antes/después:
+Notas: superficie, zapatos, compañía, estrés, comida</pre></div>
+  </div>
+</section>
+</main>
+
+<div class="footer">Manu Hybrid OS · PWA V1 · flexible, no frágil · agosto 2026</div>
+<script>
+function openTab(id, btn){
+  document.querySelectorAll('.panel').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.tab').forEach(t=>t.classList.remove('active'));
+  const panel=document.getElementById(id);
+  if(panel){panel.classList.add('active'); panel.scrollIntoView({behavior:'smooth', block:'start'});}
+  if(btn && btn.classList.contains('tab')) btn.classList.add('active');
+  const matching=[...document.querySelectorAll('.tab')].find(t=>t.getAttribute('onclick')?.includes("'"+id+"'"));
+  if(matching) matching.classList.add('active');
+}
+
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js').catch(() => {});
+  });
+}
+</script>
+</body>
+</html>
